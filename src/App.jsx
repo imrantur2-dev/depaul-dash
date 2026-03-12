@@ -117,7 +117,7 @@ export default function App() {
         const jitterLng = (Math.random() - 0.5) * 0.00035;
         return [p[0] + jitterLat, p[1] + jitterLng];
       });
-    }, 2000);
+    }, 1000);
     return () => clearInterval(id);
   }, []);
 
