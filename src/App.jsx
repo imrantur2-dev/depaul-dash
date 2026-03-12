@@ -64,7 +64,7 @@ const PRODUCTS = [
 { id: "p30", name: "Instant Oatmeal", category: "Food", price: 2.79, size: "1 cup" }
 ];
 
-function ProductThumb({ name }) {
+function ProductThumb({ name, image }) {
   const initials = name
     .split(" ")
     .slice(0, 2)
@@ -75,7 +75,15 @@ function ProductThumb({ name }) {
   return (
     <div className="thumb" aria-hidden>
       <div className="thumbInner">
-        <div className="thumbMark">{initials}</div>
+        {image ? (
+          <img
+            src={image}
+            alt={name}
+            style={{ width: "80%", height: "80%", objectFit: "contain" }}
+          />
+        ) : (
+          <div className="thumbMark">{initials}</div>
+        )}
       </div>
     </div>
   );
