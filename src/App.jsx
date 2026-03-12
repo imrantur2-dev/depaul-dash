@@ -35,7 +35,7 @@ const PRODUCTS = [
   { id: "p1", name: "Red Bull", category: "Drinks", price: 3.49, size: "12 oz", image: "/depaul-dash/products/redbull.jpg" },
   { id: "p2", name: "Gatorade", category: "Drinks", price: 2.49, size: "20 oz", image: "/depaul-dash/products/gatorade.png" },
   { id: "p3", name: "Water", category: "Drinks", price: 1.49, size: "16 oz", image: "/depaul-dash/products/water.png"  },
-  { id: "p4", name: "Doritos", category: "Snacks", price: 2.29, size: "2.75 oz", image: "/depaul-dash/products/doritos.png" },
+  { id: "p4", name: "Doritos", category: "Snacks", price: 2.29, size: "2.75 oz", image: "/depaul-dash/products/Doritos.png" },
   { id: "p5", name: "Twix", category: "Snacks", price: 1.79, size: "1.79 oz", image: "/depaul-dash/products/Twix.png" },
   { id: "p6", name: "Gum", category: "Snacks", price: 1.29, size: "pack", image: "/depaul-dash/products/Gum.png" },
   { id: "p7", name: "Advil", category: "Essentials", price: 6.99, size: "20 ct", image: "/depaul-dash/products/Advil.png" },
