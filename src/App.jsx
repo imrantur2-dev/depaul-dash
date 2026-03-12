@@ -98,11 +98,11 @@ export default function App() {
   useEffect(() => {
     const id = setInterval(() => {
       setVanPos((p) => {
-        const jitterLat = (Math.random() - 0.5) * 0.00022;
-        const jitterLng = (Math.random() - 0.5) * 0.00028;
+        const jitterLat = (Math.random() - 0.5) * 0.00030;
+        const jitterLng = (Math.random() - 0.5) * 0.00035;
         return [p[0] + jitterLat, p[1] + jitterLng];
       });
-    }, 3000);
+    }, 2000);
     return () => clearInterval(id);
   }, []);
 
