@@ -87,7 +87,7 @@ function ProductThumb({ name, image }) {
       </div>
     </div>
   );
-}v
+}
 
 export default function App() {
   const campusCenter = [41.923, -87.6536];
@@ -634,7 +634,7 @@ const removeFromCart = (productName) => {
   <div className="grid">
   {visibleProducts.map((p) => (
     <div key={p.id} className="item">
-      <ProductThumb name={p.name} />
+      <ProductThumb name={p.name} image={p.image} />
       <div className="itemBody">
         <div className="itemName">{p.name}</div>
 
