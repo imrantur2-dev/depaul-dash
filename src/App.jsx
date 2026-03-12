@@ -590,7 +590,8 @@ const removeFromCart = (productName) => {
               </div>
             </div>
 
-            <div className="grid">
+            
+  <div className="grid">
   {visibleProducts.map((p) => (
     <div key={p.id} className="item">
       <ProductThumb name={p.name} />
@@ -632,7 +633,8 @@ const removeFromCart = (productName) => {
     </div>
   ))}
 </div>
-            {!showAllProducts && filtered.length > 6 && (
+
+{!showAllProducts && filtered.length > 6 && (
   <div className="seeAllWrap">
     <div className="productsFade" />
     <button
@@ -641,9 +643,10 @@ const removeFromCart = (productName) => {
     >
       See All
     </button>
-          </div>
-            )}
-
+  </div>
+)}
+</div>
+</div>
         {/* TRACK */}
         <div id="track" className="section">
           <div className="sectionHeader">
