@@ -44,6 +44,24 @@ const PRODUCTS = [
   { id: "p10", name: "Ramen Cup", category: "Food", price: 2.49, size: "1 cup" },
   { id: "p11", name: "Protein Bar", category: "Food", price: 2.19, size: "1 bar" },
   { id: "p12", name: "Orange Juice", category: "Drinks", price: 3.29, size: "12 oz" },
+  { id: "p13", name: "Shampoo", category: "Essentials", price: 6.49, size: "travel size" },
+{ id: "p14", name: "Body Wash", category: "Essentials", price: 5.99, size: "travel size" },
+{ id: "p15", name: "Soap", category: "Essentials", price: 2.49, size: "1 bar" },
+{ id: "p16", name: "Razor", category: "Essentials", price: 5.99, size: "3 pack" },
+{ id: "p17", name: "Toothpaste", category: "Essentials", price: 3.99, size: "travel size" },
+{ id: "p18", name: "Toothbrush", category: "Essentials", price: 2.49, size: "1 pc" },
+{ id: "p19", name: "Deodorant", category: "Essentials", price: 4.99, size: "travel size" },
+{ id: "p20", name: "Condoms", category: "Essentials", price: 8.99, size: "3 pack" },
+{ id: "p21", name: "Tampons", category: "Essentials", price: 7.49, size: "small pack" },
+{ id: "p22", name: "Notebook", category: "Essentials", price: 3.99, size: "1 pc" },
+{ id: "p23", name: "Pens", category: "Essentials", price: 2.49, size: "2 pack" },
+{ id: "p24", name: "Phone Charger", category: "Essentials", price: 11.99, size: "1 pc" },
+{ id: "p25", name: "Band-Aids", category: "Essentials", price: 3.49, size: "20 ct" },
+{ id: "p26", name: "Laundry Detergent", category: "Essentials", price: 8.99, size: "small bottle" },
+{ id: "p27", name: "Trail Mix", category: "Snacks", price: 2.99, size: "3 oz" },
+{ id: "p28", name: "Chips Ahoy", category: "Snacks", price: 2.49, size: "small pack" },
+{ id: "p29", name: "Mac and Cheese Cup", category: "Food", price: 3.49, size: "1 cup" },
+{ id: "p30", name: "Instant Oatmeal", category: "Food", price: 2.79, size: "1 cup" }
 ];
 
 function ProductThumb({ name }) {
