@@ -92,6 +92,8 @@ export default function App() {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState({});
+    const [cartItems, setCartItems] = useState({});
+  const [showAllProducts, setShowAllProducts] = useState(false);
 
   // slow movement
   useEffect(() => {
@@ -104,6 +106,10 @@ export default function App() {
     }, 6000);
     return () => clearInterval(id);
   }, []);
+
+    useEffect(() => {
+    setShowAllProducts(false);
+  }, [activeCategory, query]);
 
   const etaMinutes = useMemo(() => {
     const dx = Math.abs(vanPos[0] - campusCenter[0]);
@@ -121,6 +127,8 @@ export default function App() {
       return catOk && qOk;
     });
   }, [activeCategory, query]);
+
+  const visibleProducts = showAllProducts ? filtered : filtered.slice(0, 6);
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
@@ -585,7 +593,7 @@ const removeFromCart = (productName) => {
             </div>
 
             <div className="grid">
-              {filtered.map((p) => (
+              {visibleProducts.map((p) => (
                 <div key={p.id} className="item">
                   <ProductThumb name={p.name} />
                   <div className="itemBody">
