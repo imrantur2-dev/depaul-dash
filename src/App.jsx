@@ -32,18 +32,39 @@ function formatEta(minutes) {
 const CATEGORIES = ["All", "Snacks", "Drinks", "Essentials", "Food"];
 
 const PRODUCTS = [
-  { id: "p1", name: "Red Bull", category: "Drinks", price: 3.49, size: "12 oz", image: "/products/redbull.png"},
+  { id: "p1", name: "Red Bull", category: "Drinks", price: 3.49, size: "12 oz" },
   { id: "p2", name: "Gatorade", category: "Drinks", price: 2.49, size: "20 oz" },
   { id: "p3", name: "Water", category: "Drinks", price: 1.49, size: "16 oz" },
-  { id: "p4", name: "Doritos", category: "Snacks", price: 2.29, size: "2.75 oz" },
-  { id: "p5", name: "Twix", category: "Snacks", price: 1.79, size: "1.79 oz" },
-  { id: "p6", name: "Gum", category: "Snacks", price: 1.29, size: "pack" },
-  { id: "p7", name: "Advil", category: "Essentials", price: 6.99, size: "20 ct" },
-  { id: "p8", name: "Tide Pods", category: "Essentials", price: 7.99, size: "10 ct" },
-  { id: "p9", name: "Disinfecting Wipes", category: "Essentials", price: 4.99, size: "35 ct" },
-  { id: "p10", name: "Ramen Cup", category: "Food", price: 2.49, size: "1 cup" },
-  { id: "p11", name: "Protein Bar", category: "Food", price: 2.19, size: "1 bar" },
-  { id: "p12", name: "Orange Juice", category: "Drinks", price: 3.29, size: "12 oz" },
+  { id: "p4", name: "Orange Juice", category: "Drinks", price: 3.29, size: "12 oz" },
+
+  { id: "p5", name: "Doritos", category: "Snacks", price: 2.29, size: "2.75 oz" },
+  { id: "p6", name: "Twix", category: "Snacks", price: 1.79, size: "1.79 oz" },
+  { id: "p7", name: "Gum", category: "Snacks", price: 1.29, size: "pack" },
+  { id: "p8", name: "Protein Bar", category: "Snacks", price: 2.19, size: "1 bar" },
+  { id: "p9", name: "Trail Mix", category: "Snacks", price: 2.99, size: "3 oz" },
+  { id: "p10", name: "Chips Ahoy", category: "Snacks", price: 2.49, size: "small pack" },
+
+  { id: "p11", name: "Ramen Cup", category: "Food", price: 2.49, size: "1 cup" },
+  { id: "p12", name: "Mac and Cheese Cup", category: "Food", price: 3.49, size: "1 cup" },
+  { id: "p13", name: "Instant Oatmeal", category: "Food", price: 2.79, size: "1 cup" },
+
+  { id: "p14", name: "Advil", category: "Essentials", price: 6.99, size: "20 ct" },
+  { id: "p15", name: "Tide Pods", category: "Essentials", price: 7.99, size: "10 ct" },
+  { id: "p16", name: "Disinfecting Wipes", category: "Essentials", price: 4.99, size: "35 ct" },
+  { id: "p17", name: "Shampoo", category: "Essentials", price: 6.49, size: "travel size" },
+  { id: "p18", name: "Body Wash", category: "Essentials", price: 5.99, size: "travel size" },
+  { id: "p19", name: "Soap", category: "Essentials", price: 2.49, size: "1 bar" },
+  { id: "p20", name: "Razor", category: "Essentials", price: 5.99, size: "3 pack" },
+  { id: "p21", name: "Toothpaste", category: "Essentials", price: 3.99, size: "travel size" },
+  { id: "p22", name: "Toothbrush", category: "Essentials", price: 2.49, size: "1 pc" },
+  { id: "p23", name: "Deodorant", category: "Essentials", price: 4.99, size: "travel size" },
+  { id: "p24", name: "Condoms", category: "Essentials", price: 8.99, size: "3 pack" },
+  { id: "p25", name: "Tampons", category: "Essentials", price: 7.49, size: "small pack" },
+  { id: "p26", name: "Notebook", category: "Essentials", price: 3.99, size: "1 pc" },
+  { id: "p27", name: "Pens", category: "Essentials", price: 2.49, size: "2 pack" },
+  { id: "p28", name: "Phone Charger", category: "Essentials", price: 11.99, size: "1 pc" },
+  { id: "p29", name: "Band-Aids", category: "Essentials", price: 3.49, size: "20 ct" },
+  { id: "p30", name: "Laundry Detergent", category: "Essentials", price: 8.99, size: "small bottle" }
 ];
 
 function ProductThumb({ name }) {
@@ -225,7 +246,7 @@ const removeFromCart = (productName) => {
         .trackBar{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
         .trackInput{height:40px;border-radius:14px;border:1px solid var(--line);padding:0 12px;min-width:280px;outline:none;font-weight:900}
         .footer{margin-top:22px;padding:22px 0 32px;color:rgba(11,18,32,.65)}
-       @media (max-width: 768px){
+        @media (max-width: 768px){
   .navWrap{
     position: static;
   }
@@ -234,8 +255,8 @@ const removeFromCart = (productName) => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-    padding: 14px 16px;
+    gap: 16px;
+    padding: 16px 14px;
   }
 
   .brand{
@@ -244,20 +265,22 @@ const removeFromCart = (productName) => {
   }
 
   .links{
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     width: 100%;
   }
 
   .links button{
+    display: block;
     width: auto;
-    min-width: 160px;
-    max-width: 220px;
+    min-width: 180px;
     text-align: center;
-    font-size: 14px;
-    padding: 10px 12px;
+    font-size: 15px;
+    line-height: 1.2;
+    padding: 8px 12px;
   }
 
   .right{
@@ -265,13 +288,13 @@ const removeFromCart = (productName) => {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
     margin-top: 4px;
   }
 
   .cart{
-    justify-content: center;
+    min-width: 120px;
   }
 
   .container{
@@ -284,7 +307,19 @@ const removeFromCart = (productName) => {
   }
 
   .heroTitle{
-    font-size: 34px;
+    font-size: 30px;
+    line-height: 1.05;
+  }
+
+  .heroActions{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroActions .btn,
+  .heroActions .pill{
+    width: 100%;
+    justify-content: center;
   }
 
   .sectionHeader,
@@ -294,9 +329,21 @@ const removeFromCart = (productName) => {
     align-items: stretch;
   }
 
+  .tabs{
+    justify-content: center;
+  }
+
   .grid{
     grid-template-columns: repeat(2, minmax(0,1fr));
     gap: 10px;
+  }
+
+  .itemBody{
+    padding: 10px;
+  }
+
+  .itemName{
+    font-size: 14px;
   }
 
   .search,
@@ -306,7 +353,7 @@ const removeFromCart = (productName) => {
   }
 
   .mapWrap{
-    height: 300px;
+    height: 280px;
   }
 }
   .cartPanel{
@@ -406,6 +453,41 @@ const removeFromCart = (productName) => {
   .cartActions{
     flex-direction: column;
   }
+}
+  .qtyControls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:auto;
+}
+
+.qtyCount{
+  min-width:24px;
+  text-align:center;
+  font-weight:1000;
+}
+
+.qtyBtn{
+  border:none;
+  background:var(--red);
+  color:#fff;
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+.add{
+  margin-top:auto;
+  border:none;
+  border-radius:14px;
+  background:var(--red);
+  color:#fff;
+  font-weight:1000;
+  padding:10px 12px;
+  cursor:pointer;
 }
       `}</style>
 {isCartOpen && (
@@ -531,19 +613,15 @@ const removeFromCart = (productName) => {
             </div>
 
             <div className="grid">
-              {filtered.map((p) => (
-                <div key={p.id} className="item">
-                  <ProductThumb name={p.name} />
-                  <div className="itemBody">
-                    <div className="itemName">{p.name}</div>
-                    <div className="itemMeta">
-                      <span>{p.size}</span>
-                      <span>${p.price.toFixed(2)}</span>
-                    </div>
-                    <button className="add" onClick={() => addToCart(p)}>Add to Cart</button>
-                  </div>
-                </div>
-              ))}
+              {cartItems[p.name] ? (
+  <div className="qtyControls">
+    <button className="qtyBtn" onClick={() => removeFromCart(p.name)}>-</button>
+    <span className="qtyCount">{cartItems[p.name]}</span>
+    <button className="qtyBtn" onClick={() => addToCart(p)}>+</button>
+  </div>
+) : (
+  <button className="add" onClick={() => addToCart(p)}>Add to Cart</button>
+)}
             </div>
           </div>
         </div>
