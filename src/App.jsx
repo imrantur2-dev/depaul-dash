@@ -76,12 +76,12 @@ function ProductThumb({ name, image }) {
     <div className="thumb" aria-hidden>
       <div className="thumbInner">
         {image ? (
-          <img
-            src={image}
-            alt={name}
-            style={{ width: "80%", height: "80%", objectFit: "contain" }}
-          />
-        ) : (
+  <img
+    src={image}
+    alt={name}
+    style={{ width: "70%", height: "70%", objectFit: "contain" }}
+  />
+) : (
           <div className="thumbMark">{initials}</div>
         )}
       </div>
