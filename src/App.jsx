@@ -93,7 +93,6 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [showAllProducts, setShowAllProducts] = useState(false);
-  const visibleProducts = showAllProducts ? filtered : filtered.slice(0, 6);
 
   // slow movement
   useEffect(() => {
@@ -127,6 +126,8 @@ export default function App() {
       return catOk && qOk;
     });
   }, [activeCategory, query]);
+
+  const visibleProducts = showAllProducts ? filtered : filtered.slice(0, 6);
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
