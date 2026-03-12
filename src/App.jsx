@@ -87,7 +87,7 @@ function ProductThumb({ name, image }) {
       </div>
     </div>
   );
-}
+}v
 
 export default function App() {
   const campusCenter = [41.923, -87.6536];
