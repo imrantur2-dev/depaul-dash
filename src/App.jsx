@@ -480,8 +480,7 @@ const removeFromCart = (productName) => {
     </div>
   </div>
 )}
-  </div>
-)}
+
       {/* NAV */}
       <div className="navWrap">
         <div className="nav">
