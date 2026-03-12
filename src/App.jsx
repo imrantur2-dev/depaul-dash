@@ -467,6 +467,37 @@ const removeFromCart = (productName) => {
   padding:10px 12px;
   cursor:pointer;
 }
+  .seeAllWrap{
+  position: relative;
+  margin-top: -8px;
+  padding: 0 16px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productsFade{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(245,247,251,0), rgba(245,247,251,1));
+  pointer-events: none;
+}
+
+.seeAllBtn{
+  position: relative;
+  z-index: 2;
+  border: 1px solid #d9dee7;
+  border-radius: 14px;
+  padding: 12px 22px;
+  font-weight: 1000;
+  cursor: pointer;
+  background: #eef1f4;
+  color: #0b1220;
+  box-shadow: 0 8px 18px rgba(0,0,0,.06);
+}
       `}</style>
 {isCartOpen && (
   <div className="cartPanel">
