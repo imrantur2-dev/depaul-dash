@@ -72,6 +72,8 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [query, setQuery] = useState("");
   const [cartCount, setCartCount] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState({});
 
   // slow movement
   useEffect(() => {
@@ -107,7 +109,37 @@ export default function App() {
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const addToCart = () => setCartCount((c) => c + 1);
+  const addToCart = (product) => {
+  setCartItems((prev) => {
+    const updated = {
+      ...prev,
+      [product.name]: (prev[product.name] || 0) + 1,
+    };
+
+    const total = Object.values(updated).reduce((sum, qty) => sum + qty, 0);
+    setCartCount(total);
+
+    return updated;
+  });
+};
+const removeFromCart = (productName) => {
+  setCartItems((prev) => {
+    const updated = { ...prev };
+
+    if (!updated[productName]) return prev;
+
+    updated[productName] -= 1;
+
+    if (updated[productName] <= 0) {
+      delete updated[productName];
+    }
+
+    const total = Object.values(updated).reduce((sum, qty) => sum + qty, 0);
+    setCartCount(total);
+
+    return updated;
+  });
+};
 
   return (
     <div className="page">
@@ -134,8 +166,23 @@ export default function App() {
           cursor:pointer;padding:8px 10px;border-radius:10px}
         .links button:hover{color:var(--text);background:rgba(15,23,42,.06)}
         .right{display:flex;gap:10px;align-items:center}
-        .cart{position:relative;display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:999px;
-          background:#fff;border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.06);font-weight:900;font-size:12px}
+        .cart{
+            position:relative;
+          display:flex;
+          gap:8px;
+          align-items:center;
+          justify-content:center;
+          padding:10px 16px;
+          min-height:44px;
+          min-width:120px;
+          border-radius:12px;
+          background:#fff;
+          border:1px solid var(--line);
+          box-shadow:0 6px 18px rgba(0,0,0,.06);
+          font-weight:900;
+          font-size:12px;
+          cursor:pointer;
+        }
         .dot{position:absolute;top:-6px;right:-6px;height:18px;min-width:18px;padding:0 6px;border-radius:999px;
           background:var(--red);color:#fff;font-weight:900;font-size:12px;display:grid;place-items:center;border:2px solid #fff}
         .btn{border:none;border-radius:12px;padding:10px 12px;font-weight:1000;cursor:pointer}
@@ -262,8 +309,95 @@ export default function App() {
     height: 300px;
   }
 }
-      `}</style>
+  .cartPanel{
+  position:absolute;
+  top:70px;
+  right:24px;
+  width:320px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 18px 50px rgba(0,0,0,.14);
+  padding:14px;
+  z-index:50;
+}
 
+.cartPanelTitle{
+  font-size:18px;
+  font-weight:1000;
+  margin-bottom:10px;
+}
+
+.cartEmpty{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.cartRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.cartRow:last-child{
+  border-bottom:none;
+}
+
+.cartItemName{
+  font-weight:900;
+  font-size:14px;
+}
+
+.cartQty{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.qtyBtn{
+  border:none;
+  background:var(--red);
+  color:#fff;
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+@media (max-width: 768px){
+  .cartPanel{
+    right:12px;
+    left:12px;
+    width:auto;
+    top:220px;
+  }
+}
+      `}</style>
+{isCartOpen && (
+  <div className="cartPanel">
+    <div className="cartPanelTitle">Your Cart</div>
+
+    {Object.keys(cartItems).length === 0 ? (
+      <div className="cartEmpty">Your cart is empty.</div>
+    ) : (
+      Object.entries(cartItems).map(([name, qty]) => (
+        <div className="cartRow" key={name}>
+          <div className="cartItemName">{name}</div>
+
+          <div className="cartQty">
+            <button className="qtyBtn" onClick={() => removeFromCart(name)}>-</button>
+            <span>{qty}</span>
+            <button className="qtyBtn" onClick={() => addToCart({ name })}>+</button>
+          </div>
+        </div>
+      ))
+    )}
+  </div>
+)}
       {/* NAV */}
       <div className="navWrap">
         <div className="nav">
@@ -282,10 +416,10 @@ export default function App() {
           </div>
 
           <div className="right">
-            <div className="cart">
-              🛒 Cart
-              {cartCount > 0 && <div className="dot">{cartCount}</div>}
-            </div>
+            <div className="cart" onClick={() => setIsCartOpen((v) => !v)}>
+          🛒 Cart
+           {cartCount > 0 && <div className="dot">{cartCount}</div>}
+          </div>
             <button className="btn btnGhost" onClick={() => alert("Login (prototype)")}>
               Log in
             </button>
@@ -359,7 +493,7 @@ export default function App() {
                       <span>{p.size}</span>
                       <span>${p.price.toFixed(2)}</span>
                     </div>
-                    <button className="add" onClick={addToCart}>Add to Cart</button>
+                    <button className="add" onClick={() => addToCart(p)}>Add to Cart</button>
                   </div>
                 </div>
               ))}
