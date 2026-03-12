@@ -375,6 +375,37 @@ const removeFromCart = (productName) => {
     width:auto;
     top:220px;
   }
+} 
+  .cartActions{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
+
+.cartActionBtn{
+  flex:1;
+  border:none;
+  border-radius:12px;
+  padding:12px 14px;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+.cartContinue{
+  background:#f1f3f5;
+  color:#0b1220;
+  border:1px solid var(--line);
+}
+
+.cartOrder{
+  background:var(--red);
+  color:#fff;
+}
+
+@media (max-width: 768px){
+  .cartActions{
+    flex-direction: column;
+  }
 }
       `}</style>
 {isCartOpen && (
@@ -396,6 +427,22 @@ const removeFromCart = (productName) => {
         </div>
       ))
     )}
+
+    <div className="cartActions">
+      <button
+        className="cartActionBtn cartContinue"
+        onClick={() => setIsCartOpen(false)}
+      >
+        Continue Shopping
+      </button>
+
+      <button
+        className="cartActionBtn cartOrder"
+        onClick={() => alert("Prototype only")}
+      >
+        Order Now
+      </button>
+    </div>
   </div>
 )}
       {/* NAV */}
