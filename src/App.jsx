@@ -92,7 +92,6 @@ export default function App() {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState({});
-    const [cartItems, setCartItems] = useState({});
   const [showAllProducts, setShowAllProducts] = useState(false);
 
   // slow movement
