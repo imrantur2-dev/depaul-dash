@@ -77,10 +77,17 @@ function ProductThumb({ name, image }) {
       <div className="thumbInner">
         {image ? (
   <img
-    src={image}
-    alt={name}
-    style={{ width: "70%", height: "70%", objectFit: "contain" }}
-  />
+  src={image}
+  alt={name}
+  style={{
+    maxWidth: "100%",
+    maxHeight: "100%",
+    width: "68%",
+    height: "68%",
+    objectFit: "contain",
+    display: "block"
+  }}
+/>
 ) : (
           <div className="thumbMark">{initials}</div>
         )}
@@ -247,8 +254,19 @@ const removeFromCart = (productName) => {
         .item{border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 12px 26px rgba(0,0,0,.05);
           overflow:hidden;display:flex;flex-direction:column}
         .thumb{height:120px;background:linear-gradient(135deg, rgba(18,62,117,.10), rgba(201,31,42,.10));display:grid;place-items:center}
-        .thumbInner{width:86%;height:80%;border-radius:16px;background:rgba(255,255,255,.8);border:1px solid rgba(15,23,42,.10);
-          box-shadow:0 18px 35px rgba(0,0,0,.06);display:grid;place-items:center}
+        .thumbInner{
+  width: 86%;
+  height: 80%;
+  border-radius: 16px;
+  background: rgba(255,255,255,.8);
+  border: 1px solid rgba(15,23,42,.10);
+  box-shadow: 0 18px 35px rgba(0,0,0,.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 10px;
+}
         .thumbMark{font-weight:1000;color:var(--blue);font-size:22px;letter-spacing:-.8px}
         .itemBody{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
         .itemName{font-weight:1000}
