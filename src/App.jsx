@@ -32,7 +32,7 @@ function formatEta(minutes) {
 const CATEGORIES = ["All", "Snacks", "Drinks", "Essentials", "Food"];
 
 const PRODUCTS = [
-  { id: "p1", name: "Red Bull", category: "Drinks", price: 3.49, size: "12 oz", image: "/products/redbull.png"},
+  { id: "p1", name: "Red Bull", category: "Drinks", price: 3.49, size: "12 oz", image: "/depaul-dash/products/redbull.jpg" },
   { id: "p2", name: "Gatorade", category: "Drinks", price: 2.49, size: "20 oz" },
   { id: "p3", name: "Water", category: "Drinks", price: 1.49, size: "16 oz" },
   { id: "p4", name: "Doritos", category: "Snacks", price: 2.29, size: "2.75 oz" },
