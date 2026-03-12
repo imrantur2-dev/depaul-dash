@@ -93,6 +93,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [showAllProducts, setShowAllProducts] = useState(false);
+  const visibleProducts = showAllProducts ? filtered : filtered.slice(0, 6);
 
   // slow movement
   useEffect(() => {
@@ -126,8 +127,6 @@ export default function App() {
       return catOk && qOk;
     });
   }, [activeCategory, query]);
-
-  const visibleProducts = showAllProducts ? filtered : filtered.slice(0, 6);
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
@@ -592,22 +591,58 @@ const removeFromCart = (productName) => {
             </div>
 
             <div className="grid">
-              {visibleProducts.map((p) => (
-                <div key={p.id} className="item">
-                  <ProductThumb name={p.name} />
-                  <div className="itemBody">
-                    <div className="itemName">{p.name}</div>
-                    <div className="itemMeta">
-                      <span>{p.size}</span>
-                      <span>${p.price.toFixed(2)}</span>
-                    </div>
-                    <button className="add" onClick={() => addToCart(p)}>Add to Cart</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+  {visibleProducts.map((p) => (
+    <div key={p.id} className="item">
+      <ProductThumb name={p.name} />
+      <div className="itemBody">
+        <div className="itemName">{p.name}</div>
+
+        <div className="itemMeta">
+          <span>{p.size}</span>
+          <span>${p.price.toFixed(2)}</span>
         </div>
+
+        {cartItems[p.name] ? (
+          <div className="qtyControls">
+            <button
+              className="qtyBtn"
+              onClick={() => removeFromCart(p.name)}
+            >
+              -
+            </button>
+
+            <span className="qtyCount">{cartItems[p.name]}</span>
+
+            <button
+              className="qtyBtn"
+              onClick={() => addToCart(p)}
+            >
+              +
+            </button>
+          </div>
+        ) : (
+          <button
+            className="add"
+            onClick={() => addToCart(p)}
+          >
+            Add to Cart
+          </button>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+            {!showAllProducts && filtered.length > 6 && (
+  <div className="seeAllWrap">
+    <div className="productsFade" />
+    <button
+      className="seeAllBtn"
+      onClick={() => setShowAllProducts(true)}
+    >
+      See All
+    </button>
+          </div>
+            )}
 
         {/* TRACK */}
         <div id="track" className="section">
