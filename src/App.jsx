@@ -106,6 +106,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [showAllProducts, setShowAllProducts] = useState(false);
 
@@ -143,6 +144,13 @@ export default function App() {
   }, [activeCategory, query]);
 
   const visibleProducts = showAllProducts ? filtered : filtered.slice(0, 6);
+  const subtotal = Object.entries(cartItems).reduce((sum, [name, qty]) => {
+  const product = PRODUCTS.find((p) => p.name === name);
+  return sum + (product ? product.price * qty : 0);
+}, 0);
+
+const estimatedTax = subtotal * 0.1025;
+const total = subtotal + estimatedTax;
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
@@ -524,6 +532,233 @@ const removeFromCart = (productName) => {
   color: #0b1220;
   box-shadow: 0 8px 18px rgba(0,0,0,.06);
 }
+
+.checkoutOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.28);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.checkoutPanel{
+  width: min(760px, 100%);
+  max-height: 92vh;
+  overflow: hidden;
+  background: #f7f8fa;
+  border-radius: 26px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.22);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10000;
+}
+
+.checkoutHeader{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 22px 14px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+
+.checkoutClose{
+  border: none;
+  background: transparent;
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.checkoutTitleWrap{
+  flex: 1;
+  text-align: center;
+  margin-right: 38px;
+}
+
+.checkoutSmall{
+  color: var(--muted);
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.checkoutTitle{
+  font-size: 22px;
+  font-weight: 1000;
+}
+
+.checkoutBody{
+  padding: 18px 22px;
+  overflow: auto;
+}
+
+.checkoutItems{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.checkoutItem{
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
+  align-items: center;
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px;
+  border: 1px solid var(--line);
+}
+
+.checkoutItemImage{
+  width: 92px;
+  height: 92px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkoutItemImage .thumb{
+  height: 100%;
+  width: 100%;
+}
+
+.checkoutItemImage .thumbInner{
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+}
+
+.checkoutItemName{
+  font-weight: 1000;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.checkoutItemMeta{
+  margin-top: 6px;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.checkoutItemPrice{
+  margin-top: 8px;
+  font-weight: 1000;
+  font-size: 18px;
+}
+
+.checkoutSummary{
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+
+.checkoutSummaryTitle{
+  font-size: 20px;
+  font-weight: 1000;
+  margin-bottom: 14px;
+}
+
+.checkoutRow{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 18px;
+}
+
+.checkoutTotal{
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
+  padding-top: 14px;
+  font-weight: 1000;
+  font-size: 22px;
+}
+
+.checkoutFooter{
+  padding: 18px 22px 22px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+
+.checkoutContinueBtn{
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 20px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 1000;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(201,31,42,.25);
+}
+
+@media (max-width: 768px){
+  .checkoutOverlay{
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .checkoutPanel{
+    width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 26px 26px 0 0;
+  }
+
+  .checkoutHeader{
+    padding: 18px 18px 12px;
+  }
+
+  .checkoutTitleWrap{
+    margin-right: 20px;
+  }
+
+  .checkoutSmall{
+    font-size: 14px;
+  }
+
+  .checkoutTitle{
+    font-size: 18px;
+  }
+
+  .checkoutBody{
+    padding: 16px;
+  }
+
+  .checkoutItem{
+    grid-template-columns: 78px 1fr;
+    gap: 12px;
+  }
+
+  .checkoutItemImage{
+    width: 78px;
+    height: 78px;
+  }
+
+  .checkoutItemName{
+    font-size: 16px;
+  }
+
+  .checkoutItemPrice,
+  .checkoutRow{
+    font-size: 16px;
+  }
+
+  .checkoutContinueBtn{
+    font-size: 20px;
+  }
+}
       `}</style>
 {isCartOpen && (
   <div className="cartPanel">
@@ -555,10 +790,84 @@ const removeFromCart = (productName) => {
 
       <button
         className="cartActionBtn cartOrder"
-        onClick={() => alert("Prototype only")}
+        onClick={() => {
+          setIsCartOpen(false);
+          setIsCheckoutOpen(true);
+        }}
       >
         Order Now
       </button>
+    </div>
+  </div>
+)}
+{isCheckoutOpen && (
+  <div className="checkoutOverlay">
+    <div className="checkoutPanel">
+      <div className="checkoutHeader">
+        <button
+          className="checkoutClose"
+          onClick={() => setIsCheckoutOpen(false)}
+        >
+          ×
+        </button>
+
+        <div className="checkoutTitleWrap">
+          <div className="checkoutSmall">Continue Shopping</div>
+          <div className="checkoutTitle">DePaul Dash</div>
+        </div>
+      </div>
+
+      <div className="checkoutBody">
+        <div className="checkoutItems">
+          {Object.entries(cartItems).map(([name, qty]) => {
+            const product = PRODUCTS.find((p) => p.name === name);
+            if (!product) return null;
+
+            return (
+              <div className="checkoutItem" key={name}>
+                <div className="checkoutItemImage">
+                  <ProductThumb name={product.name} image={product.image} />
+                </div>
+
+                <div className="checkoutItemInfo">
+                  <div className="checkoutItemName">{product.name}</div>
+                  <div className="checkoutItemMeta">
+                    Qty: {qty}
+                  </div>
+                  <div className="checkoutItemPrice">
+                    ${(product.price * qty).toFixed(2)}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="checkoutSummary">
+          <div className="checkoutSummaryTitle">Breakdown</div>
+
+          <div className="checkoutRow">
+            <span>Subtotal</span>
+            <span>${subtotal.toFixed(2)}</span>
+          </div>
+
+          <div className="checkoutRow">
+            <span>Est. Tax (10.25%)</span>
+            <span>${estimatedTax.toFixed(2)}</span>
+          </div>
+
+          <div className="checkoutRow checkoutTotal">
+            <span>Total</span>
+            <span>${total.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="checkoutFooter">
+        <button className="checkoutContinueBtn">
+          Continue
+        </button>
+      </div>
     </div>
   </div>
 )}
