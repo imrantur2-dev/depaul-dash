@@ -107,6 +107,9 @@ export default function App() {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [selectedBuilding, setSelectedBuilding] = useState("University Hall");
+const [phoneNumber, setPhoneNumber] = useState("(312) 555-0187");
+const [paymentMethod, setPaymentMethod] = useState("Card");
   const [cartItems, setCartItems] = useState({});
   const [showAllProducts, setShowAllProducts] = useState(false);
 
@@ -146,11 +149,37 @@ export default function App() {
   const visibleProducts = showAllProducts ? filtered : filtered.slice(0, 6);
   const subtotal = Object.entries(cartItems).reduce((sum, [name, qty]) => {
   const product = PRODUCTS.find((p) => p.name === name);
+  const BUILDINGS = [
+  "Corcoran Hall",
+  "LeCompte Hall",
+  "Munroe Hall",
+  "Ozanam Hall",
+  "Seton Hall",
+  "University Hall",
+  "McCabe Hall",
+  "Sanctuary Hall",
+  "Sanctuary Townhomes",
+  "Centennial Hall",
+  "Sheffield Square",
+  "Courtside Apartments",
+  "University Center",
+  "DePaul Center",
+  "Lewis Center",
+  "Schmitt Academic Center",
+  "Richardson Library",
+  "Student Center",
+  "McGowan South",
+  "McGowan North",
+  "CDM Center",
+  "O’Connell Hall",
+  "Arts & Letters Hall"
+];
   return sum + (product ? product.price * qty : 0);
 }, 0);
 
 const estimatedTax = subtotal * 0.1025;
 const total = subtotal + estimatedTax;
+const estimatedDeliveryTime = "12–18 min";
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
@@ -759,6 +788,72 @@ const removeFromCart = (productName) => {
     font-size: 20px;
   }
 }
+  .checkoutSection{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.checkoutSectionTitle{
+  font-size:22px;
+  font-weight:1000;
+  margin-bottom:4px;
+}
+
+.checkoutCard{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+}
+
+.checkoutLabel{
+  display:block;
+  font-size:14px;
+  font-weight:1000;
+  margin-bottom:10px;
+  color:var(--muted);
+}
+
+.checkoutSelect,
+.checkoutInput{
+  width:100%;
+  height:48px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  padding:0 14px;
+  font-size:16px;
+  font-weight:900;
+  outline:none;
+  background:#fff;
+}
+
+.checkoutInfoText{
+  font-size:18px;
+  font-weight:1000;
+}
+
+.paymentOptions{
+  display:flex;
+  gap:10px;
+}
+
+.paymentBtn{
+  flex:1;
+  border:1px solid var(--line);
+  background:#f4f6f8;
+  color:var(--text);
+  border-radius:14px;
+  padding:12px 14px;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+.paymentBtn.active{
+  background:var(--red);
+  color:#fff;
+  border-color:var(--red);
+}
       `}</style>
 {isCartOpen && (
   <div className="cartPanel">
@@ -797,77 +892,6 @@ const removeFromCart = (productName) => {
       >
         Order Now
       </button>
-    </div>
-  </div>
-)}
-{isCheckoutOpen && (
-  <div className="checkoutOverlay">
-    <div className="checkoutPanel">
-      <div className="checkoutHeader">
-        <button
-          className="checkoutClose"
-          onClick={() => setIsCheckoutOpen(false)}
-        >
-          ×
-        </button>
-
-        <div className="checkoutTitleWrap">
-          <div className="checkoutSmall">Continue Shopping</div>
-          <div className="checkoutTitle">DePaul Dash</div>
-        </div>
-      </div>
-
-      <div className="checkoutBody">
-        <div className="checkoutItems">
-          {Object.entries(cartItems).map(([name, qty]) => {
-            const product = PRODUCTS.find((p) => p.name === name);
-            if (!product) return null;
-
-            return (
-              <div className="checkoutItem" key={name}>
-                <div className="checkoutItemImage">
-                  <ProductThumb name={product.name} image={product.image} />
-                </div>
-
-                <div className="checkoutItemInfo">
-                  <div className="checkoutItemName">{product.name}</div>
-                  <div className="checkoutItemMeta">
-                    Qty: {qty}
-                  </div>
-                  <div className="checkoutItemPrice">
-                    ${(product.price * qty).toFixed(2)}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="checkoutSummary">
-          <div className="checkoutSummaryTitle">Breakdown</div>
-
-          <div className="checkoutRow">
-            <span>Subtotal</span>
-            <span>${subtotal.toFixed(2)}</span>
-          </div>
-
-          <div className="checkoutRow">
-            <span>Est. Tax (10.25%)</span>
-            <span>${estimatedTax.toFixed(2)}</span>
-          </div>
-
-          <div className="checkoutRow checkoutTotal">
-            <span>Total</span>
-            <span>${total.toFixed(2)}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="checkoutFooter">
-        <button className="checkoutContinueBtn">
-          Continue
-        </button>
-      </div>
     </div>
   </div>
 )}
