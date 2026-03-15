@@ -577,7 +577,20 @@ const removeFromCart = (productName) => {
             <button onClick={() => scrollToId("home")}>Home</button>
             <button onClick={() => scrollToId("order")}>Shop</button>
             <button onClick={() => scrollToId("track")}>Track the Truck</button>
-            <button onClick={() => scrollToId("contact")}>Contact</button>
+            <button
+              onClick={() => {
+                const appUrl = "linkedin://in/imran-turyshov-017937395";
+                const webUrl = "https://www.linkedin.com/in/imran-turyshov-017937395?trk=contact-info";
+
+                window.location.href = appUrl;
+
+                setTimeout(() => {
+                  window.open(webUrl, "_blank");
+                }, 800);
+              }}
+            >
+              Contact
+            </button>
           </div>
 
           <div className="right">
