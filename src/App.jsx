@@ -202,7 +202,7 @@ export default function App() {
 
 const estimatedTax = subtotal * 0.1025;
 const total = subtotal + estimatedTax;
-const estimatedDeliveryTime = "12–18 min";
+const estimatedDeliveryTime = "5–7 min";
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
