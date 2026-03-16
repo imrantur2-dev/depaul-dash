@@ -860,10 +860,11 @@ const removeFromCart = (productName) => {
 .paymentOptions{
   display:flex;
   gap:10px;
+  flex-wrap:wrap;
 }
 
 .paymentBtn{
-  flex:1;
+  flex:1 1 30%;
   border:1px solid var(--line);
   background:#f4f6f8;
   color:var(--text);
@@ -1058,6 +1059,13 @@ const removeFromCart = (productName) => {
                     onClick={() => setPaymentMethod("Cash")}
                   >
                     Cash
+                  </button>
+                <button
+                    type="button"
+                    className={paymentMethod === "Blue Bucks" ? "paymentBtn active" : "paymentBtn"}
+                    onClick={() => setPaymentMethod("Blue Bucks")}
+                  >
+                    Blue Bucks
                   </button>
                 </div>
               </div>
