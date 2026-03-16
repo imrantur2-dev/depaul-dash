@@ -63,6 +63,28 @@ const PRODUCTS = [
 { id: "p29", name: "Mac and Cheese Cup", category: "Food", price: 2.49, size: "1 cup", image: "/depaul-dash/products/MnC.png" }, 
 { id: "p30", name: "Instant Oatmeal", category: "Food", price: 2.79, size: "1 cup", image: "/depaul-dash/products/Instant Oatmeal.png" },
 ];
+const BUILDINGS = [
+  "University Hall",
+  "Sanctuary Hall",
+  "Corcoran Hall",
+  "Seton Hall",
+  "Ozanam Hall",
+  "LeCompte Hall",
+  "Munroe Hall",
+  "McCabe Hall",
+  "Centennial Hall",
+  "Sheffield Square",
+  "Courtside Apartments",
+  "University Center",
+  "Student Center",
+  "Schmitt Academic Center",
+  "Richardson Library",
+  "DePaul Center",
+  "Lewis Center",
+  "CDM Center",
+  "McGowan South",
+  "Arts & Letters Hall"
+];
 
 function ProductThumb({ name, image }) {
   const initials = name
@@ -107,8 +129,9 @@ export default function App() {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutStep, setCheckoutStep] = useState("summary");
   const [selectedBuilding, setSelectedBuilding] = useState("University Hall");
-  const [phoneNumber, setPhoneNumber] = useState("(312) 555-0187");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const [cartItems, setCartItems] = useState({});
   const [showAllProducts, setShowAllProducts] = useState(false);
@@ -630,14 +653,15 @@ const removeFromCart = (productName) => {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  margin-bottom:20px;
 }
 
 .checkoutItem{
   display: grid;
-  grid-template-columns: 92px 1fr;
-  gap: 14px;
-  align-items: center;
-  background: #fff;
+  grid-template-columns:92px 1fr;
+  gap:14px;
+  align-items:center;
+  background:#fff;
   border-radius: 18px;
   padding: 12px;
   border: 1px solid var(--line);
@@ -648,7 +672,7 @@ const removeFromCart = (productName) => {
   height: 92px;
   border-radius: 16px;
   overflow: hidden;
-  background: #fff;
+  background:#fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -887,7 +911,8 @@ const removeFromCart = (productName) => {
       <button
         className="cartActionBtn cartOrder"
         onClick={() => {
-          console.log("order clicked");
+          setCheckoutStep("summary");
+          setIsCartOpen(false);
           setIsCheckoutOpen(true);
         }}
       >
@@ -896,106 +921,160 @@ const removeFromCart = (productName) => {
     </div>
   </div>
 )}
+
 {isCheckoutOpen && (
   <div className="checkoutOverlay">
     <div className="checkoutPanel">
       <div className="checkoutHeader">
         <button
           className="checkoutClose"
-          onClick={() => setIsCheckoutOpen(false)}
+          onClick={() => {
+            if (checkoutStep === "details") {
+              setCheckoutStep("summary");
+            } else {
+              setIsCheckoutOpen(false);
+            }
+          }}
         >
           ←
         </button>
 
         <div className="checkoutTitleWrap">
-          <div className="checkoutSmall">Checkout</div>
+          <div className="checkoutSmall">
+            {checkoutStep === "summary" ? "Checkout" : "Address details"}
+          </div>
           <div className="checkoutTitle">DePaul Dash</div>
         </div>
       </div>
 
-      <div className="checkoutBody">
-        <div className="checkoutSection">
-          <div className="checkoutSectionTitle">Address details</div>
+      {checkoutStep === "summary" ? (
+        <>
+          <div className="checkoutBody">
+            <div className="checkoutItems">
+              {Object.entries(cartItems).map(([name, qty]) => {
+                const product = PRODUCTS.find((p) => p.name === name);
+                if (!product) return null;
 
-          <div className="checkoutCard">
-            <label className="checkoutLabel">Choose building</label>
-            <select
-              className="checkoutSelect"
-              value={selectedBuilding}
-              onChange={(e) => setSelectedBuilding(e.target.value)}
+                return (
+                  <div className="checkoutItem" key={name}>
+                    <div className="checkoutItemImage">
+                      <ProductThumb name={product.name} image={product.image} />
+                    </div>
+
+                    <div className="checkoutItemInfo">
+                      <div className="checkoutItemName">{product.name}</div>
+                      <div className="checkoutItemMeta">Qty: {qty}</div>
+                      <div className="checkoutItemPrice">
+                        ${(product.price * qty).toFixed(2)}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="checkoutSummary">
+              <div className="checkoutSummaryTitle">Breakdown</div>
+
+              <div className="checkoutRow">
+                <span>Subtotal</span>
+                <span>${subtotal.toFixed(2)}</span>
+              </div>
+
+              <div className="checkoutRow">
+                <span>Est. Tax (10.25%)</span>
+                <span>${estimatedTax.toFixed(2)}</span>
+              </div>
+
+              <div className="checkoutRow checkoutTotal">
+                <span>Total</span>
+                <span>${total.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="checkoutFooter">
+            <button
+              className="checkoutContinueBtn"
+              type="button"
+              onClick={() => setCheckoutStep("details")}
             >
-              {BUILDINGS.map((building) => (
-                <option key={building} value={building}>
-                  {building}
-                </option>
-              ))}
-            </select>
+              Continue
+            </button>
           </div>
+        </>
+      ) : (
+        <>
+          <div className="checkoutBody">
+            <div className="checkoutSection">
+              <div className="checkoutSectionTitle">Address details</div>
 
-          <div className="checkoutCard">
-            <label className="checkoutLabel">Phone number</label>
-            <input
-              className="checkoutInput"
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="Enter phone number"
-            />
-          </div>
+              <div className="checkoutCard">
+                <label className="checkoutLabel">Choose building</label>
+                <select
+                  className="checkoutSelect"
+                  value={selectedBuilding}
+                  onChange={(e) => setSelectedBuilding(e.target.value)}
+                >
+                  {BUILDINGS.map((building) => (
+                    <option key={building} value={building}>
+                      {building}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="checkoutCard">
-            <div className="checkoutLabel">Estimated delivery time</div>
-            <div className="checkoutInfoText">{estimatedDeliveryTime}</div>
-          </div>
+              <div className="checkoutCard">
+                <label className="checkoutLabel">Phone number</label>
+                <input
+                  className="checkoutInput"
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Enter phone number"
+                />
+              </div>
 
-          <div className="checkoutCard">
-            <div className="checkoutLabel">Payment method</div>
+              <div className="checkoutCard">
+                <div className="checkoutLabel">Estimated delivery time</div>
+                <div className="checkoutInfoText">{estimatedDeliveryTime}</div>
+              </div>
 
-            <div className="paymentOptions">
-              <button
-                type="button"
-                className={paymentMethod === "Card" ? "paymentBtn active" : "paymentBtn"}
-                onClick={() => setPaymentMethod("Card")}
-              >
-                Card
-              </button>
+              <div className="checkoutCard">
+                <div className="checkoutLabel">Payment method</div>
 
-              <button
-                type="button"
-                className={paymentMethod === "Cash" ? "paymentBtn active" : "paymentBtn"}
-                onClick={() => setPaymentMethod("Cash")}
-              >
-                Cash
-              </button>
+                <div className="paymentOptions">
+                  <button
+                    type="button"
+                    className={paymentMethod === "Card" ? "paymentBtn active" : "paymentBtn"}
+                    onClick={() => setPaymentMethod("Card")}
+                  >
+                    Card
+                  </button>
+
+                  <button
+                    type="button"
+                    className={paymentMethod === "Cash" ? "paymentBtn active" : "paymentBtn"}
+                    onClick={() => setPaymentMethod("Cash")}
+                  >
+                    Cash
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="checkoutSummary">
-            <div className="checkoutSummaryTitle">Breakdown</div>
-
-            <div className="checkoutRow">
-              <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
-
-            <div className="checkoutRow">
-              <span>Est. Tax (10.25%)</span>
-              <span>${estimatedTax.toFixed(2)}</span>
-            </div>
-
-            <div className="checkoutRow checkoutTotal">
-              <span>Total</span>
-              <span>${total.toFixed(2)}</span>
-            </div>
+          <div className="checkoutFooter">
+            <button
+              className="checkoutContinueBtn"
+              type="button"
+              onClick={() => alert("Only a prototype yet")}
+            >
+              Continue
+            </button>
           </div>
-        </div>
-      </div>
-
-      <div className="checkoutFooter">
-        <button className="checkoutContinueBtn" type="button">
-          Continue
-        </button>
-      </div>
+        </>
+      )}
     </div>
   </div>
 )}
